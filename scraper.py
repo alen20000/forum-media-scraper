@@ -2,14 +2,16 @@ from bs4 import BeautifulSoup
 import requests
 from playwright.sync_api import sync_playwright
 import subprocess
+import config_path
 import os
 '''
 site:www.52av.one
 note:有一個外部的N_m3u8DL-RE，替代很慢的ffmpeg，放在檔案根目錄
 '''
 class GetData:
-    def __init__(self,url=None):
 
+
+    def __init__(self,url=None):
 
         #初始化
         self.url = url
@@ -17,7 +19,10 @@ class GetData:
         self.soup = None
         self.m3u8_url =None
         self.title = None
-        self.output_dir = 'downloads' #目錄參數，預設根目錄
+        self.output_dir = config_path.DOWNLOAD_FOLDER
+        self.cpu_cores = os.cpu_count() 
+
+        #Run
         self._run()
 
     def _run(self):
@@ -49,19 +54,21 @@ class GetData:
             
             browser.close()
             print('m3u8:', self.m3u8_url)
+
     def _get_title(self,page=None):
         content = page
         soup = BeautifulSoup(content,'html.parser')
         title = soup.find('title').text.strip()
         self.title = title.split('-')[0].strip()
         print(title)
-    def _download(self):
-        if not self.m3u8_url:
-            print('❌ 沒有 m3u8 URL，無法下載')
-            return
 
-        # ① 確保輸出目錄存在
-        os.makedirs(self.output_dir, exist_ok=True)
+
+    def _download(self):
+
+
+        if not self.m3u8_url:
+            print('沒找到m3u8 URL，無法下載')
+            return
 
         print(self.output_dir)
         output = f'{self.title}.mp4'
@@ -70,7 +77,7 @@ class GetData:
             self.m3u8_url,
             '--save-name', self.title,
             '--save-dir', self.output_dir,  # 目錄參數
-            '--thread-count', '16',
+            '--thread-count', str(self.cpu_cores),
             '--auto-select',
         ])
 
