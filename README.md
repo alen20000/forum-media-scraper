@@ -8,6 +8,13 @@
 - N_m3u8DL-RE 
     -- 功能:解碼DASH/HLS (m3u8)
 
+### USAGE
+
+main.py  -- 打開後輸入URL，ENTER後自動爬蟲。
+
+Batch -- 批量抓取。
+第一次運行後會創建Bath_Download_list.txt，把論壇影片網址貼上，有處理一些邏輯判斷，但還沒做好，url之間還是要空格，幫助判斷
+
 
 ### 進度&想法:
 
