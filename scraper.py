@@ -49,7 +49,7 @@ class GetData:
             page.on('request', handle_request) #監聽request
             print('尋找影片地址。。。')
 
-            page.goto('https://www.52av.one/', wait_until='domcontentloaded', timeout=60000)  # 先拿cookie
+            page.goto('https://www.52av.one/', wait_until='commit', timeout=60000)  # 先拿cookie
             page.goto(self.url, wait_until='domcontentloaded', timeout=60000)  # 再進影片頁
             self._get_title(page.content())
 

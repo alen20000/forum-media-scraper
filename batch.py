@@ -1,7 +1,7 @@
 import re
 import config_path
 from pathlib import Path
-
+import scraper
 class Batch:
 
 
@@ -23,11 +23,14 @@ class Batch:
 
     def _check_list(self):
         '''
-        檢查輸入與完成的list
+        檢查輸入與完成的list、下載路徑資料夾，沒有就創建
         '''
 
         self.target_list.touch(exist_ok=True)
         self.done_list.touch(exist_ok=True)
+        self.save_path = config_path.DOWNLOAD_FOLDER #
+        path = self.save_path
+        path.mkdir(parents=True, exist_ok=True)
 
     def _read_target_list(self):
 
@@ -36,9 +39,22 @@ class Batch:
             self.content = f.read()
 
     def _get_urls(self):
-        pattern = r"https://www.52av[^\s\"\']+"
 
+        pattern = r"https://www.52av[^\s\"\']+" # 這邊還要優化，最好做到一個soup也能順利提取
         urls = re.findall(pattern,self.content)
-        for url in urls:
-            print("目標網址",url)
+        
+        done_url = urls.copy() #要複寫的done_list 內容
+
+        for i, url in  enumerate(urls, start=1):
+            print(f"目標網址-{i}",url)
+            scraper.GetData(url)
+
+            done_url = done_url[1:]
+            with open (self.done_list, 'a',encoding='utf-8') as f: # 完成後添加到完成清單
+                f.write(f'{url}\n')
+            
+            with open(self.target_list,'w',encoding='utf-8') as f: #從抓取清單中清除
+                f.writelines([line + '\n' for line in done_url])
+
+
 Batch()
