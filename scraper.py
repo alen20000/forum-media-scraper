@@ -42,7 +42,7 @@ class GetData:
             page = context.new_page()
 
             def handle_request(request):
-                if '.m3u8?' in request.url:
+                if '.m3u8?' in request.url and 'yocoo' in request.url:
                     self.m3u8_url = request.url
                     self.url_list.append(self.m3u8_url)
 
@@ -99,6 +99,5 @@ class GetData:
                 '--save-dir', self.output_dir,  # 目錄參數
                 '--thread-count', str(self.cpu_cores),
                 '--auto-select',
-                '--log-level OFF' #  ERROR 顯示錯誤資訊 or OFF 不顯示log
                 ])
 
