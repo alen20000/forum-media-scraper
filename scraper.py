@@ -8,7 +8,6 @@ import os
 site:www.52av.one
 note:有一個外部的N_m3u8DL-RE，替代很慢的ffmpeg，放在檔案根目錄
 
-testing url: https://www.52av.one/thread-3620126-1-2.html
 '''
 class GetData:
 
@@ -100,5 +99,6 @@ class GetData:
                 '--save-dir', self.output_dir,  # 目錄參數
                 '--thread-count', str(self.cpu_cores),
                 '--auto-select',
+                '--log-level OFF' #  ERROR 顯示錯誤資訊 or OFF 不顯示log
                 ])
 
