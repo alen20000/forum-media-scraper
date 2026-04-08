@@ -1,31 +1,18 @@
-### Tech Stack
+#  爬蟲工具
 
+## Tech Stack
+* - python
+* - 自動化瀏覽器
+* - html解析
+* - N_m3u8DL-RE 下載引擎
 
-#### 動態爬蟲
-- playwright
-    -- 功能: 模擬瀏覽器操作
-#### 影片處理工具：
-- N_m3u8DL-RE 
-    -- 功能:解碼DASH/HLS (m3u8)
 
 ### USAGE
-
-main.py  -- 打開後輸入URL，ENTER後自動爬蟲。
-
-Batch -- 批量抓取。
-第一次運行後會創建Bath_Download_list.txt，把論壇影片網址貼上，有處理一些邏輯判斷，但還沒做好，url之間還是要空格，幫助判斷
+* 普通CIL `main.py`
 
 
-### 進度&想法:
+* 批量CLI `batch.py`
 
-CLI架構，配合其他腳本調用
-目前完成幾
-- [x] 下載後自動命名
-- [x] 支持一頁多抓
-- [x] 批量網頁抓取(可選)
 
-感覺可以在弄成雲端伺服器部屬的自動爬蟲，
-但是已處理 已爬網頁紀錄、判斷抓取成功
-N_m3u8DL-RE  這工具在linux雲端部屬可能比較麻煩
 
 
