@@ -57,4 +57,4 @@ class Batch:
                 f.writelines([line + '\n' for line in done_url])
 
 
-Batch()
+bd = Batch()

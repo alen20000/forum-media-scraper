@@ -20,8 +20,6 @@ class GetData:
         self.soup = None
         self.m3u8_url =None
         self.title = None
-        self.output_dir = config_path.DOWNLOAD_FOLDER
-        self.cpu_cores = os.cpu_count() 
         self.url_list = []
         #Run
         self._run()
@@ -37,7 +35,7 @@ class GetData:
 
         with sync_playwright() as p:
 
-            browser = p.chromium.launch(headless=True)
+            browser = p.chromium.launch(headless=False) #[!] False 顯示瀏覽器；True 關閉瀏覽器
             context = browser.new_context()
             page = context.new_page()
 
@@ -78,12 +76,13 @@ class GetData:
             target_url = self.url_list[0]
             output = f'{self.title}.mp4'
             subprocess.run([
-            'N_m3u8DL-RE',  # 跟ffmpeg一樣直接叫名字
+            config_path.DOWNLOADER_PATH,  # 跟ffmpeg一樣直接叫名字
             target_url,
             '--save-name', self.title,
-            '--save-dir', self.output_dir,  # 目錄參數
-            '--thread-count', str(self.cpu_cores),
+            '--save-dir', config_path.DOWNLOAD_FOLDER,  # 目錄參數
+            '--thread-count', '8',
             '--auto-select',
+            '--download-retry-count',str(10), # 異常後重試次數
             ])
         
         elif url_count > 1:
@@ -91,13 +90,14 @@ class GetData:
             print('目標超過一個')
             for i, m3u8 in enumerate(self.url_list, start=1):
                 target_url = m3u8
-                filr_name = f"{self.title}_{i}"
+                file_name = f"{self.title}_{i}"
                 subprocess.run([
-                'N_m3u8DL-RE',  # 跟ffmpeg一樣直接叫名字
+                config_path.DOWNLOADER_PATH,  # 跟ffmpeg一樣直接叫名字
                 target_url,
-                '--save-name', filr_name,
-                '--save-dir', self.output_dir,  # 目錄參數
-                '--thread-count', str(self.cpu_cores),
+                '--save-name', file_name,
+                '--save-dir', config_path.DOWNLOAD_FOLDER,  # 目錄參數
+                '--thread-count', '8',
                 '--auto-select',
+                '--download-retry-count',str(10), # 異常後重試次數
                 ])
 
