@@ -35,7 +35,7 @@ class GetData:
 
         with sync_playwright() as p:
 
-            browser = p.chromium.launch(headless=False) #[!] False 顯示瀏覽器；True 關閉瀏覽器
+            browser = p.chromium.launch(headless=True) #[!] True 顯示瀏覽器；True 關閉瀏覽器
             context = browser.new_context()
             page = context.new_page()
 

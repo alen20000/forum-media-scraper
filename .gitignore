@@ -1,8 +1,15 @@
 *.mp4
 /Download
 /Downloads
-/__pycache__
-/Logs
-Your_Done_List.txt
+__pycache__/
+
+
+
+#docs
 Batch_Download_List.txt
 mine_readme.txt
+Your_Done_List.txt
+
+# log files
+Logs/
+/app.log
